@@ -53,9 +53,11 @@ Software engineer & Computer Science M.Sc. student focused on turning unfamiliar
 ## 📊 GitHub Stats:
 
 <p align="left">
-  <img src="https://github-readme-stats.vercel.app/api?username=xSilverline&show_icons=false&bg_color=0d1117&border_color=c9d1d9&title_color=ffffff&text_color=c9d1d9&ring_color=6e7681" alt="xSilverline's GitHub Stats" />
+  <img src="./assets/languages.svg" width="680" alt="Code Telemetry - Most Used Languages" />
+  <!-- <img src="https://github-readme-stats.vercel.app/api?username=xSilverline&show_icons=false&bg_color=0d1117&border_color=c9d1d9&title_color=ffffff&text_color=c9d1d9&ring_color=6e7681" alt="xSilverline's GitHub Stats" />
   <img height="180em" src="https://github-readme-stats.vercel.app/api/top-langs/?username=xSilverline&layout=compact&hide=html,css&bg_color=0d1117&border_color=c9d1d9&title_color=ffffff&text_color=c9d1d9" />
-  <img height="180em" src="./assets/languages.svg" alt="Most Used Languages" />
+  <img height="180em" src="./assets/languages.svg" alt="Most Used Languages" /> -->
+  
 </p>
 
 <!--
