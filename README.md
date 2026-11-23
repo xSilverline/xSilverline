@@ -2,12 +2,16 @@
   <img src="./assets/header.svg" width="680" alt="xSilverline // Systems · AI Engineering · GameDev" />
 </p>
 
-Computer Science M.Sc. student focused on fast onboarding, low-level performance, and building practical software backed by rigorous verification. I combine AI-assisted workflows with first-principles engineering.
+<p>Computer Science M.Sc. student focused on turning unfamiliar tech into working systems <br>
+  -> from adaptive AI agents and LLM pipelines to web apps and network infrastructure. </p>
 
 **Currently into:**
 - 💻 **Coding:** Adaptive AI Game Manager (`Python` + `PyTorch` + `UE5`) & 3D PC Airflow CFD Simulator
-- 🎮 **Gaming:** Black Desert Online & Satisfactory
-- 🎧 **Listening:** Symphonic metal & dark orchestral game OSTs
+- 🎮 **Gaming:** Black Desert Online & Satisfactory & Space Engineers 2
+- 🔧 **Tinkering:** PC hardware, GPU UV, Airflow & system optimization
+- 🎧 **Listening:** Symphonic metal, Deep focus music & dark orchestral game OSTs
+- 🎶 **Creating:** Music on YT, My own game
+- 🏔️ **Offline:** Mountain hiking & water sports
 
 ---
 
