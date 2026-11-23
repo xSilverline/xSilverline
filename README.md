@@ -1,6 +1,8 @@
-Software engineer & Computer Science M.Sc. student focused on turning unfamiliar tech into working systems — from adaptive AI agents and LLM pipelines to web apps and network infrastructure.
+Software engineer & Computer Science M.Sc. student 
+focused on turning unfamiliar tech into working systems 
+— from adaptive AI agents and LLM pipelines to web apps and network infrastructure.
 
-**Currently into:**
+**Some of my activities:**
 
 * 💻 **Coding:** Adaptive AI agents in Python/PyTorch, Unreal Engine 5 & LLM integrations
 * 🎮 **Gaming:** Black Desert Online, Satisfactory & Space Engineers 2
@@ -9,7 +11,7 @@ Software engineer & Computer Science M.Sc. student focused on turning unfamiliar
 * 🎶 **Creating:** Music on YT, My own game
 * 🏔️ **Offline:** Mountain hiking & water sports
 
-## 💻 Tech Stack:
+<!--## 💻 Tech Stack: -->
 
 ###### Languages & Syntax:
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)
@@ -49,8 +51,9 @@ Software engineer & Computer Science M.Sc. student focused on turning unfamiliar
 ![JetBrains](https://img.shields.io/badge/JetBrains-000000?style=for-the-badge&logo=jetbrains&logoColor=white)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
+![Antigravity](https://img.shields.io/badge/Antigravity-161B22?style=for-the-badge&logo=googlegemini&logoColor=8E75B2)
 
-## 📊 GitHub Stats:
+<!-- ## 📊 GitHub Stats: -->
 
 <p align="left">
   <img src="./assets/languages.svg" width="680" alt="Code Telemetry - Most Used Languages" />
