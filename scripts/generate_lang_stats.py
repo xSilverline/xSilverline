@@ -317,15 +317,15 @@ def render_svg(lang_lines: Counter[str], total_commits: int, active_repos: int, 
     start_y = 142.0 - ((len(top_langs) - 1) * row_step) / 2.0
     bar_x, bar_w = 390, 152
 
+    max_count = top_langs[0][1]
     rows: list[str] = []
     for idx, (lang, count) in enumerate(top_langs):
         y = start_y + idx * row_step
         pct = (count / total_lines) * 100.0
-        fill_w = max((count / total_lines) * bar_w, 3.0)
+        fill_w = max((count / max_count) * bar_w, 6.0)
         color = LANG_COLORS.get(lang, "#8b949e")
         safe_lang = html.escape(lang)
         loc_str = format_loc(count)
-
         rows.append(
             f'<g>'
             f'  <circle cx="278" cy="{y - 4:.1f}" r="4" fill="{color}" />'
