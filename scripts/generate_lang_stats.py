@@ -6,6 +6,7 @@ from __future__ import annotations
 import base64
 import html
 import json
+import math
 import os
 import re
 import subprocess
@@ -276,61 +277,120 @@ def analyze_repo(
     return repo_langs, repo_commits
 
 
+def format_loc(count: int) -> str:
+    if count >= 1_000_000:
+        return f"{count / 1_000_000:.1f}M"
+    if count >= 1_000:
+        return f"{count / 1_000:.1f}k"
+    return str(count)
+
+
 def render_svg(lang_lines: Counter[str], total_commits: int, active_repos: int, top_n: int = 6) -> str:
     top_langs = lang_lines.most_common(top_n)
     total_lines = sum(count for _, count in top_langs)
     if total_lines == 0:
         sys.exit("[ERROR] Zliczono 0 linii kodu. Sprawdź AUTHOR_EMAILS / AUTHOR_NAMES w logach.")
 
-    width, height = 340, 195
-    bar_x, bar_y, bar_w, bar_h = 25, 50, 290, 8
+    width, height = 680, 230
 
-    bar_segments: list[str] = []
-    cursor_x = float(bar_x)
-    for idx, (lang, count) in enumerate(top_langs):
-        seg_w = (bar_x + bar_w - cursor_x) if idx == len(top_langs) - 1 else (count / total_lines) * bar_w
+
+    cx, cy, radius = 128, 138, 52
+    circumference = 2.0 * math.pi * radius
+    gap_px = 2.5 if len(top_langs) > 1 else 0.0
+
+    donut_segments: list[str] = []
+    cum_len = 0.0
+    for lang, count in top_langs:
+        seg_len = (count / total_lines) * circumference
+        dash = max(seg_len - gap_px, 0.8) if seg_len > gap_px else seg_len
+        rest = max(circumference - dash, 0.0)
+        offset = (circumference - cum_len) % circumference
         color = LANG_COLORS.get(lang, "#8b949e")
-        bar_segments.append(
-            f'<rect x="{cursor_x:.2f}" y="{bar_y}" width="{max(seg_w, 0.5):.2f}" height="{bar_h}" fill="{color}" />'
+        donut_segments.append(
+            f'<circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="{color}" '
+            f'stroke-width="11" stroke-dasharray="{dash:.2f} {rest:.2f}" '
+            f'stroke-dashoffset="{offset:.2f}" transform="rotate(-90 {cx} {cy})" />'
         )
-        cursor_x += seg_w
+        cum_len += seg_len
 
-    legend_items: list[str] = []
+    row_step = 24
+    start_y = 142.0 - ((len(top_langs) - 1) * row_step) / 2.0
+    bar_x, bar_w = 390, 152
+
+    rows: list[str] = []
     for idx, (lang, count) in enumerate(top_langs):
-        pct = (count / total_lines) * 100
-        col = idx // 3
-        row = idx % 3
-        x = 25 + col * 155
-        y = 84 + row * 26
+        y = start_y + idx * row_step
+        pct = (count / total_lines) * 100.0
+        fill_w = max((count / total_lines) * bar_w, 3.0)
         color = LANG_COLORS.get(lang, "#8b949e")
         safe_lang = html.escape(lang)
-        legend_items.append(
-            f'<circle cx="{x + 5}" cy="{y - 4}" r="5" fill="{color}" />'
-            f'<text x="{x + 16}" y="{y}" class="lang-text">{safe_lang} {pct:.2f}%</text>'
+        loc_str = format_loc(count)
+
+        rows.append(
+            f'<g>'
+            f'  <circle cx="278" cy="{y - 4:.1f}" r="4" fill="{color}" />'
+            f'  <text x="290" y="{y:.1f}" class="lang-name">{safe_lang}</text>'
+            f'  <rect x="{bar_x}" y="{y - 9:.1f}" width="{bar_w}" height="6" rx="3" fill="#161b22" />'
+            f'  <rect x="{bar_x}" y="{y - 9:.1f}" width="{fill_w:.2f}" height="6" rx="3" fill="{color}" />'
+            f'  <text x="598" y="{y:.1f}" text-anchor="end" class="lang-loc">{loc_str}</text>'
+            f'  <text x="654" y="{y:.1f}" text-anchor="end" class="lang-pct">{pct:.1f}%</text>'
+            f'</g>'
         )
 
-    footer = f"{total_commits} commits · {active_repos} repos · all branches"
+    meta_text = f"ALL BRANCHES  ·  {active_repos} REPOS"
 
-    return f"""<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Most Used Languages">
-  <style>
-    .title {{ font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #ffffff; }}
-    .lang-text {{ font: 400 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }}
-    .footer {{ font: 400 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8b949e; }}
-  </style>
-  <rect x="0.5" y="0.5" rx="4.5" width="{width - 1}" height="{height - 1}" fill="#0d1117" stroke="#c9d1d9" stroke-opacity="0.85" />
-  <text x="25" y="34" class="title">Most Used Languages</text>
+    return f"""<svg width="{width}" height="{height}" viewBox="0 0 {width} {height}" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Code Telemetry - Most Used Languages">
   <defs>
-    <clipPath id="bar-clip">
-      <rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="{bar_h}" rx="4" />
-    </clipPath>
+    <linearGradient id="card-bg" x1="0" y1="0" x2="{width}" y2="{height}" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d1117" />
+      <stop offset="100%" stop-color="#111722" />
+    </linearGradient>
+    <linearGradient id="top-sheen" x1="0" y1="0" x2="{width}" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="50%" stop-color="#e6edf3" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <pattern id="dot-grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.8" fill="#ffffff" fill-opacity="0.035" />
+    </pattern>
   </defs>
-  <g clip-path="url(#bar-clip)">
-    {"".join(bar_segments)}
-  </g>
+
+  <style>
+    .header-title {{ font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #f0f6fc; letter-spacing: 1.4px; }}
+    .header-meta {{ font: 500 10.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #8b949e; }}
+    .donut-val {{ font: 700 24px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #ffffff; }}
+    .donut-lbl {{ font: 600 9.5px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8b949e; letter-spacing: 1.4px; }}
+    .lang-name {{ font: 600 12.5px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e6edf3; }}
+    .lang-loc {{ font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #6e7681; }}
+    .lang-pct {{ font: 600 11.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #c9d1d9; }}
+  </style>
+
+  <!-- Tło i ramka -->
+  <rect x="0.5" y="0.5" rx="12" width="{width - 1}" height="{height - 1}" fill="url(#card-bg)" stroke="#30363d" />
+  <rect x="1" y="1" rx="11.5" width="{width - 2}" height="{height - 2}" fill="url(#dot-grid)" />
+  <line x1="24" y1="1" x2="{width - 24}" y2="1" stroke="url(#top-sheen)" stroke-width="1.2" />
+
+  <!-- Nagłówek -->
+  <circle cx="28" cy="26" r="3" fill="#e6edf3" />
+  <text x="40" y="30" class="header-title">CODE TELEMETRY</text>
+  <text x="654" y="30" text-anchor="end" class="header-meta">{html.escape(meta_text)}</text>
+  <line x1="24" y1="46" x2="{width - 24}" y2="46" stroke="#21262d" stroke-width="1" />
+
+  <!-- Lewy panel: Donut Chart -->
+  <circle cx="{cx}" cy="{cy}" r="{radius}" fill="none" stroke="#161b22" stroke-width="11" />
   <g>
-    {"".join(legend_items)}
+    {"".join(donut_segments)}
   </g>
-  <text x="25" y="174" class="footer">{html.escape(footer)}</text>
+  <text x="{cx}" y="{cy + 4}" text-anchor="middle" class="donut-val">{total_commits}</text>
+  <text x="{cx}" y="{cy + 20}" text-anchor="middle" class="donut-lbl">COMMITS</text>
+
+  <!-- Separator pionowy -->
+  <line x1="248" y1="64" x2="248" y2="206" stroke="#21262d" stroke-width="1" />
+
+  <!-- Prawy panel: Lista języków -->
+  <g>
+    {"".join(rows)}
+  </g>
 </svg>
 """
 
