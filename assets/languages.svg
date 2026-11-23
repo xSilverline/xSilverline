@@ -1,21 +1,53 @@
-<svg width="340" height="195" viewBox="0 0 340 195" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Most Used Languages">
-  <style>
-    .title { font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #ffffff; }
-    .lang-text { font: 400 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #c9d1d9; }
-    .footer { font: 400 11px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8b949e; }
-  </style>
-  <rect x="0.5" y="0.5" rx="4.5" width="339" height="194" fill="#0d1117" stroke="#c9d1d9" stroke-opacity="0.85" />
-  <text x="25" y="34" class="title">Most Used Languages</text>
+<svg width="680" height="230" viewBox="0 0 680 230" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Code Telemetry - Most Used Languages">
   <defs>
-    <clipPath id="bar-clip">
-      <rect x="25" y="50" width="290" height="8" rx="4" />
-    </clipPath>
+    <linearGradient id="card-bg" x1="0" y1="0" x2="680" y2="230" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#0d1117" />
+      <stop offset="100%" stop-color="#111722" />
+    </linearGradient>
+    <linearGradient id="top-sheen" x1="0" y1="0" x2="680" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0" />
+      <stop offset="50%" stop-color="#e6edf3" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </linearGradient>
+    <pattern id="dot-grid" width="16" height="16" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="0.8" fill="#ffffff" fill-opacity="0.035" />
+    </pattern>
   </defs>
-  <g clip-path="url(#bar-clip)">
-    <rect x="25.00" y="50" width="106.08" height="8" fill="#f34b7d" /><rect x="131.08" y="50" width="72.47" height="8" fill="#b07219" /><rect x="203.55" y="50" width="59.01" height="8" fill="#3178c6" /><rect x="262.56" y="50" width="36.78" height="8" fill="#555555" /><rect x="299.34" y="50" width="8.28" height="8" fill="#3572A5" /><rect x="307.62" y="50" width="7.38" height="8" fill="#f1e05a" />
-  </g>
+
+  <style>
+    .header-title { font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif; fill: #f0f6fc; letter-spacing: 1.4px; }
+    .header-meta { font: 500 10.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #8b949e; }
+    .donut-val { font: 700 24px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #ffffff; }
+    .donut-lbl { font: 600 9.5px 'Segoe UI', Ubuntu, Sans-Serif; fill: #8b949e; letter-spacing: 1.4px; }
+    .lang-name { font: 600 12.5px 'Segoe UI', Ubuntu, Sans-Serif; fill: #e6edf3; }
+    .lang-loc { font: 400 11px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #6e7681; }
+    .lang-pct { font: 600 11.5px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; fill: #c9d1d9; }
+  </style>
+
+  <!-- Tło i ramka -->
+  <rect x="0.5" y="0.5" rx="12" width="679" height="229" fill="url(#card-bg)" stroke="#30363d" />
+  <rect x="1" y="1" rx="11.5" width="678" height="228" fill="url(#dot-grid)" />
+  <line x1="24" y1="1" x2="656" y2="1" stroke="url(#top-sheen)" stroke-width="1.2" />
+
+  <!-- Nagłówek -->
+  <circle cx="28" cy="26" r="3" fill="#e6edf3" />
+  <text x="40" y="30" class="header-title">CODE TELEMETRY</text>
+  <text x="654" y="30" text-anchor="end" class="header-meta">ALL BRANCHES  ·  22 REPOS</text>
+  <line x1="24" y1="46" x2="656" y2="46" stroke="#21262d" stroke-width="1" />
+
+  <!-- Lewy panel: Donut Chart -->
+  <circle cx="128" cy="138" r="52" fill="none" stroke="#161b22" stroke-width="11" />
   <g>
-    <circle cx="30" cy="80" r="5" fill="#f34b7d" /><text x="41" y="84" class="lang-text">C++ 36.58%</text><circle cx="30" cy="106" r="5" fill="#b07219" /><text x="41" y="110" class="lang-text">Java 24.99%</text><circle cx="30" cy="132" r="5" fill="#3178c6" /><text x="41" y="136" class="lang-text">TypeScript 20.35%</text><circle cx="185" cy="80" r="5" fill="#555555" /><text x="196" y="84" class="lang-text">C 12.68%</text><circle cx="185" cy="106" r="5" fill="#3572A5" /><text x="196" y="110" class="lang-text">Python 2.86%</text><circle cx="185" cy="132" r="5" fill="#f1e05a" /><text x="196" y="136" class="lang-text">JavaScript 2.54%</text>
+    <circle cx="128" cy="138" r="52" fill="none" stroke="#f34b7d" stroke-width="11" stroke-dasharray="117.02 209.71" stroke-dashoffset="0.00" transform="rotate(-90 128 138)" /><circle cx="128" cy="138" r="52" fill="none" stroke="#b07219" stroke-width="11" stroke-dasharray="79.15 247.58" stroke-dashoffset="207.21" transform="rotate(-90 128 138)" /><circle cx="128" cy="138" r="52" fill="none" stroke="#3178c6" stroke-width="11" stroke-dasharray="63.98 262.74" stroke-dashoffset="125.56" transform="rotate(-90 128 138)" /><circle cx="128" cy="138" r="52" fill="none" stroke="#555555" stroke-width="11" stroke-dasharray="38.94 287.79" stroke-dashoffset="59.08" transform="rotate(-90 128 138)" /><circle cx="128" cy="138" r="52" fill="none" stroke="#3572A5" stroke-width="11" stroke-dasharray="6.83 319.89" stroke-dashoffset="17.64" transform="rotate(-90 128 138)" /><circle cx="128" cy="138" r="52" fill="none" stroke="#f1e05a" stroke-width="11" stroke-dasharray="5.81 320.91" stroke-dashoffset="8.31" transform="rotate(-90 128 138)" />
   </g>
-  <text x="25" y="174" class="footer">211 commits · 22 repos · all branches</text>
+  <text x="128" y="142" text-anchor="middle" class="donut-val">211</text>
+  <text x="128" y="158" text-anchor="middle" class="donut-lbl">COMMITS</text>
+
+  <!-- Separator pionowy -->
+  <line x1="248" y1="64" x2="248" y2="206" stroke="#21262d" stroke-width="1" />
+
+  <!-- Prawy panel: Lista języków -->
+  <g>
+    <g>  <circle cx="278" cy="78.0" r="4" fill="#f34b7d" />  <text x="290" y="82.0" class="lang-name">C++</text>  <rect x="390" y="73.0" width="152" height="6" rx="3" fill="#161b22" />  <rect x="390" y="73.0" width="55.60" height="6" rx="3" fill="#f34b7d" />  <text x="598" y="82.0" text-anchor="end" class="lang-loc">22.8k</text>  <text x="654" y="82.0" text-anchor="end" class="lang-pct">36.6%</text></g><g>  <circle cx="278" cy="102.0" r="4" fill="#b07219" />  <text x="290" y="106.0" class="lang-name">Java</text>  <rect x="390" y="97.0" width="152" height="6" rx="3" fill="#161b22" />  <rect x="390" y="97.0" width="37.98" height="6" rx="3" fill="#b07219" />  <text x="598" y="106.0" text-anchor="end" class="lang-loc">15.5k</text>  <text x="654" y="106.0" text-anchor="end" class="lang-pct">25.0%</text></g><g>  <circle cx="278" cy="126.0" r="4" fill="#3178c6" />  <text x="290" y="130.0" class="lang-name">TypeScript</text>  <rect x="390" y="121.0" width="152" height="6" rx="3" fill="#161b22" />  <rect x="390" y="121.0" width="30.93" height="6" rx="3" fill="#3178c6" />  <text x="598" y="130.0" text-anchor="end" class="lang-loc">12.7k</text>  <text x="654" y="130.0" text-anchor="end" class="lang-pct">20.3%</text></g><g>  <circle cx="278" cy="150.0" r="4" fill="#555555" />  <text x="290" y="154.0" class="lang-name">C</text>  <rect x="390" y="145.0" width="152" height="6" rx="3" fill="#161b22" />  <rect x="390" y="145.0" width="19.28" height="6" rx="3" fill="#555555" />  <text x="598" y="154.0" text-anchor="end" class="lang-loc">7.9k</text>  <text x="654" y="154.0" text-anchor="end" class="lang-pct">12.7%</text></g><g>  <circle cx="278" cy="174.0" r="4" fill="#3572A5" />  <text x="290" y="178.0" class="lang-name">Python</text>  <rect x="390" y="169.0" width="152" height="6" rx="3" fill="#161b22" />  <rect x="390" y="169.0" width="4.34" height="6" rx="3" fill="#3572A5" />  <text x="598" y="178.0" text-anchor="end" class="lang-loc">1.8k</text>  <text x="654" y="178.0" text-anchor="end" class="lang-pct">2.9%</text></g><g>  <circle cx="278" cy="198.0" r="4" fill="#f1e05a" />  <text x="290" y="202.0" class="lang-name">JavaScript</text>  <rect x="390" y="193.0" width="152" height="6" rx="3" fill="#161b22" />  <rect x="390" y="193.0" width="3.87" height="6" rx="3" fill="#f1e05a" />  <text x="598" y="202.0" text-anchor="end" class="lang-loc">1.6k</text>  <text x="654" y="202.0" text-anchor="end" class="lang-pct">2.5%</text></g>
+  </g>
 </svg>
