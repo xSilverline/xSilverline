@@ -286,10 +286,15 @@ def format_loc(count: int) -> str:
 
 
 def render_svg(lang_lines: Counter[str], total_commits: int, active_repos: int, top_n: int = 6) -> str:
-    top_langs = lang_lines.most_common(top_n)
-    total_lines = sum(count for _, count in top_langs)
+    all_langs = lang_lines.most_common()
+    total_lines = sum(count for _, count in all_langs)
     if total_lines == 0:
         sys.exit("[ERROR] Zliczono 0 linii kodu. Sprawdź AUTHOR_EMAILS / AUTHOR_NAMES w logach.")
+
+    top_langs = all_langs[:top_n]
+    other_lines = sum(count for _, count in all_langs[top_n:])
+    if other_lines > 0 and (other_lines / total_lines) >= 0.01:
+        top_langs.append(("Other", other_lines))
 
     width, height = 680, 230
 
@@ -313,7 +318,7 @@ def render_svg(lang_lines: Counter[str], total_commits: int, active_repos: int, 
         )
         cum_len += seg_len
 
-    row_step = 24
+    row_step = 21 if len(top_langs) > 6 else 24
     start_y = 142.0 - ((len(top_langs) - 1) * row_step) / 2.0
     bar_x, bar_w = 390, 152
 
